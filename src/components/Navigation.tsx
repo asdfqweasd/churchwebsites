@@ -8,10 +8,10 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const ministriesItems = [
-    { name: "Men's Ministry", href: "/ministries/mens" },
-    { name: "Women's Ministry", href: "/ministries/womens" },
+    { name: "Mens Ministry", href: "/ministries/mens" },
+    { name: "Womens Ministry", href: "/ministries/womens" },
     { name: "Youth Ministry", href: "/ministries/youth" },
-    { name: "Children's Ministry", href: "/ministries/children" }
+    { name: "Childrens Ministry", href: "/ministries/children" }
   ];
 
   const navItems = [
