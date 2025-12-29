@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import type { StrapiImage } from "@/lib/strapiImage";
 
 export type Event = {
   id: number;               
@@ -12,7 +13,7 @@ export type Event = {
   endDatetime?: string | null;
   tags?: string;
   description?: string;
-  image?: any;
+  image?: StrapiImage | null;
 };
 
 const MONTH_NAMES = [

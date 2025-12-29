@@ -61,7 +61,21 @@ export default async function EventDetailPage({
 }: EventDetailPageProps) {
   const { slug } = await params;
 
-  let res: any = null;
+  type StrapiEvent = {
+    id: number;
+    documentId?: string;
+    slug?: string;
+    title?: string;
+    startDatetime?: string;
+    endDatetime?: string | null;
+    location?: string;
+    city?: string;
+    tags?: string;
+    description?: string;
+    image?: import("@/lib/strapiImage").StrapiImage | null;
+  };
+
+  let res: { data?: unknown } | null = null;
   let errorMessage: string | null = null;
 
   try {
@@ -70,11 +84,12 @@ export default async function EventDetailPage({
         slug
       )}&populate=image`
     );
-  } catch (err: any) {
-    errorMessage = err?.message || String(err);
+  } catch (err: unknown) {
+    errorMessage = err instanceof Error ? err.message : String(err);
   }
 
-  const event = Array.isArray(res?.data) ? res.data[0] : null;
+  const data = res?.data;
+  const event = Array.isArray(data) ? (data as StrapiEvent[])[0] : null;
 
   if (!event) {
     return (
@@ -103,7 +118,7 @@ export default async function EventDetailPage({
     );
   }
 
-  const attr = event as any;
+  const attr = event as StrapiEvent;
 
   const title: string = attr.title ?? "Event";
   const description: string = attr.description ?? "";

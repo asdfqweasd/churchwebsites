@@ -1,16 +1,29 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { fetchFromStrapi } from "@/lib/strapiClient"; // 根据你的项目结构调整路径
-import { getStrapiImageUrl } from "@/lib/strapiImage"; // 同上
+import { getStrapiImageUrl, type StrapiImage } from "@/lib/strapiImage"; // 同上
+
+type AboutData = {
+  title1?: string;
+  title1Description?: string;
+  title2?: string;
+  title2Description?: string;
+  title3?: string;
+  title3Description?: string;
+  img1?: StrapiImage | null;
+  img2?: StrapiImage | null;
+  img3?: StrapiImage | null;
+};
 
 export default async function AboutPage() {
-  let aboutData: any = null;
+  let aboutData: AboutData | null = null;
   let errorMessage: string | null = null;
 
   try {
     const res = await fetchFromStrapi("/api/about-page?populate=*");
-    aboutData = res?.data;
-  } catch (err: any) {
-    errorMessage = err?.message || String(err);
+    aboutData = (res as { data?: AboutData | null })?.data ?? null;
+  } catch (err: unknown) {
+    errorMessage = err instanceof Error ? err.message : String(err);
   }
 
   if (!aboutData) {

@@ -1,16 +1,34 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { fetchFromStrapi } from "@/lib/strapiClient";
-import { getStrapiImageUrl } from "@/lib/strapiImage";
+import { getStrapiImageUrl, type StrapiImage } from "@/lib/strapiImage";
 
 export default async function MinistriesPage() {
-  let ministriesData: any = null;
+  type MinistriesData = {
+    title1Description?: string;
+    title2?: string;
+    title2Description?: string;
+    title3?: string;
+    title3Description?: string;
+    title4?: string;
+    title4Description?: string;
+    title5?: string;
+    title5Description?: string;
+    img1?: StrapiImage | null;
+    img2?: StrapiImage | null;
+    img3?: StrapiImage | null;
+    img4?: StrapiImage | null;
+    img5?: StrapiImage | null;
+  };
+
+  let ministriesData: MinistriesData | null = null;
   let errorMessage: string | null = null;
 
   try {
     const res = await fetchFromStrapi("/api/ministries-page?populate=*");
-    ministriesData = res?.data;
-  } catch (err: any) {
-    errorMessage = err?.message || String(err);
+    ministriesData = (res as { data?: MinistriesData | null })?.data ?? null;
+  } catch (err: unknown) {
+    errorMessage = err instanceof Error ? err.message : String(err);
   }
 
   if (!ministriesData) {

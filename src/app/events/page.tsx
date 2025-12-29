@@ -12,16 +12,16 @@ export default async function EventsPage() {
   const page = pageRes?.data;
   const rawEvents = Array.isArray(eventsRes?.data) ? eventsRes.data : [];
 
-  const events: Event[] = rawEvents.map((item: any) => ({
-    id: item.id,
-    documentId: item.documentId,
-    slug: item.slug,                        
-    title: item.title ?? "",
-    startDatetime: item.startDatetime,
-    endDatetime: item.endDatetime ?? null,
-    tags: item.tags ?? "",
-    description: item.description ?? "",
-    image: item.image ?? null,
+  const events: Event[] = rawEvents.map((item) => ({
+    id: item.id as number,
+    documentId: item.documentId as string,
+    slug: item.slug as string,
+    title: (item.title as string) ?? "",
+    startDatetime: item.startDatetime as string,
+    endDatetime: (item.endDatetime as string | null | undefined) ?? null,
+    tags: (item.tags as string | undefined) ?? "",
+    description: (item.description as string | undefined) ?? "",
+    image: (item.image as Event["image"]) ?? null,
   }));
 
   const heroTitle: string = page?.heroTitle || "Upcoming Events";

@@ -8,9 +8,10 @@ import {
   type SplideInstance,
 } from "@splidejs/react-splide";
 import { getStrapiImageUrl } from "@/lib/strapiImage";
+import type { Event } from "./EventsList";
 
 interface EventCarouselProps {
-  events: any[];
+  events: Event[];
   autoplayInterval?: number;
 }
 
@@ -18,9 +19,9 @@ export default function EventCarousel({
   events,
   autoplayInterval = 4000,
 }: EventCarouselProps) {
-  if (!events || events.length === 0) return null;
-
   const splideRef = useRef<SplideInstance | null>(null);
+
+  if (!events || events.length === 0) return null;
 
   const options = {
     type: "loop" as const, 
@@ -49,7 +50,7 @@ export default function EventCarousel({
     splideRef.current?.splide?.go(">");
   };
 
-  function formatDateTime(ev: any) {
+  function formatDateTime(ev: Event) {
     if (!ev.startDatetime) return "TBA";
 
     const start = new Date(ev.startDatetime);
@@ -128,7 +129,7 @@ export default function EventCarousel({
         aria-label="Events carousel"
         className="w-full"
       >
-        {events.map((event: any) => {
+        {events.map((event) => {
           const img = getStrapiImageUrl(event.image);
 
           return (

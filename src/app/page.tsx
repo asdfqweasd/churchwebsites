@@ -1,25 +1,51 @@
+/* eslint-disable @next/next/no-img-element */
 // app/page.tsx
-import Link from 'next/link';
-import { fetchFromStrapi } from '@/lib/strapiClient';
-import { getStrapiImageUrl } from '@/lib/strapiImage';
-import EventCarousel from '@/components/EventCarousel';
+import Link from "next/link";
+import { fetchFromStrapi } from "@/lib/strapiClient";
+import { getStrapiImageUrl, type StrapiImage } from "@/lib/strapiImage";
+import EventCarousel from "@/components/EventCarousel";
+import type { Event } from "@/components/EventsList";
+
+type HomeData = {
+  heroImg?: StrapiImage | null;
+  heroDescription?: string;
+  ministriesImg?: StrapiImage | null;
+  ministriesDescription?: string;
+  givingImg?: StrapiImage | null;
+  givingDescription?: string;
+  [key: string]: unknown;
+};
 
 export default async function HomePage() {
-  let homeData: any = null;
-  let eventsData: any[] = [];
+  let homeData: HomeData | null = null;
+  let eventsData: Event[] = [];
   let errorMessage: string | null = null;
 
   try {
-    const homeRes = await fetchFromStrapi('/api/home-page?populate=*');
-    homeData = homeRes?.data;
+    const homeRes = await fetchFromStrapi("/api/home-page?populate=*");
+    homeData = (homeRes as { data?: HomeData | null })?.data ?? null;
 
     const eventsRes = await fetchFromStrapi(
-      '/api/events?populate=*&pagination[pageSize]=100&sort=startDatetime:desc'
+      "/api/events?populate=*&pagination[pageSize]=100&sort=startDatetime:desc"
     );
-    eventsData = Array.isArray(eventsRes?.data) ? eventsRes.data : [];
-  } catch (err: any) {
-    errorMessage = err?.message || String(err);
-    console.error('Error fetching home data:', errorMessage);
+    const rawEvents = Array.isArray((eventsRes as { data?: unknown })?.data)
+      ? ((eventsRes as { data: unknown }).data as Array<Record<string, unknown>>)
+      : [];
+
+    eventsData = rawEvents.map((item) => ({
+      id: item.id as number,
+      documentId: (item.documentId as string) ?? "",
+      slug: (item.slug as string) ?? "",
+      title: (item.title as string) ?? "",
+      startDatetime: (item.startDatetime as string) ?? "",
+      endDatetime: (item.endDatetime as string | null | undefined) ?? null,
+      tags: (item.tags as string | undefined) ?? "",
+      description: (item.description as string | undefined) ?? "",
+      image: (item.image as Event["image"]) ?? null,
+    }));
+  } catch (err: unknown) {
+    errorMessage = err instanceof Error ? err.message : String(err);
+    console.error("Error fetching home data:", errorMessage);
   }
 
   if (!homeData) {
@@ -34,16 +60,22 @@ export default async function HomePage() {
   }
 
   const heroImageUrl = getStrapiImageUrl(homeData.heroImg);
-  const heroAlt = homeData.heroImg?.alternativeText || 'Church';
-  const heroDescription = homeData.heroDescription || '';
+  const heroAlt =
+    (homeData.heroImg as { alternativeText?: string } | undefined)?.alternativeText ||
+    "Church";
+  const heroDescription = homeData.heroDescription || "";
 
   const ministriesImageUrl = getStrapiImageUrl(homeData.ministriesImg);
-  const ministriesAlt = homeData.ministriesImg?.alternativeText || 'Ministries';
-  const ministriesDescription = homeData.ministriesDescription || '';
+  const ministriesAlt =
+    (homeData.ministriesImg as { alternativeText?: string } | undefined)?.alternativeText ||
+    "Ministries";
+  const ministriesDescription = homeData.ministriesDescription || "";
 
   const givingImageUrl = getStrapiImageUrl(homeData.givingImg);
-  const givingAlt = homeData.givingImg?.alternativeText || 'Giving';
-  const givingDescription = homeData.givingDescription || '';
+  const givingAlt =
+    (homeData.givingImg as { alternativeText?: string } | undefined)?.alternativeText ||
+    "Giving";
+  const givingDescription = homeData.givingDescription || "";
 
   return (
     <main className="min-h-screen bg-white">
