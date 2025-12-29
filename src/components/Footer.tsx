@@ -10,22 +10,45 @@ export default function Footer() {
           <div className="w-full h-px bg-white mt-4"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left Column */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="font-bold text-lg mb-2">Address</h3>
-              <p className="text-sm mb-1">XXXXXX</p>
-              <p className="text-sm">Service Times: Mon-SUN at 9 am & 11 am</p>
+        <div className="flex justify-center">
+          {/* Location & Service Times */}
+          <div className="w-full max-w-3xl bg-white/5 border border-white/10 rounded-2xl p-6 space-y-6 text-center">
+            <div className="space-y-1">
+              <h3 className="font-bold text-lg">Address</h3>
+              <p className="text-sm text-white/80">2/39-41 Fourth Avenue Blacktown NSW, 2148</p>
             </div>
-            
-          </div>
 
-          {/* Right Column */}
-          <div className="space-y-8">            
-            <div>
-              <h3 className="font-bold text-lg mb-2">Mailing Address</h3>
-              <p className="text-sm">xxxxxxxxxxx</p>
+            <div className="space-y-3">
+              <h3 className="font-bold text-lg">Service Times</h3>
+              <div className="space-y-3">
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-2 sm:gap-3">
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-semibold">Wednesday</span>
+                  <div className="text-sm leading-6">
+                    <p className="font-semibold">Bible Studies</p>
+                    <p className="text-white/80">7:00 – 8:15 PM</p>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-2 sm:gap-3">
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-semibold">Friday</span>
+                  <div className="text-sm leading-6">
+                    <p className="font-semibold">Evening Service</p>
+                    <p className="text-white/80">7:00 – 8:30 PM</p>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-2 sm:gap-3">
+                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-semibold">Sunday</span>
+                  <div className="text-sm leading-6 space-y-1">
+                    <p><span className="font-semibold">English:</span> 9:00 – 10:45 AM</p>
+                    <p><span className="font-semibold">Akan:</span> 11:00 – 1:00 PM</p>
+                    <p><span className="font-semibold">Swahili:</span> 1:15 – 2:30 PM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2 border-t border-white/10 space-y-2">
+              <h3 className="font-bold text-lg">Mailing Address</h3>
+              <p className="text-sm text-white/80">sydwestdistrict@gmail.com</p>
             </div>
           </div>
         </div>
@@ -40,7 +63,7 @@ export default function Footer() {
           {/* Social Media Icons */}
           <div className="flex justify-center space-x-6 mb-6">
             <a 
-              href="mailto:info@church.com" 
+              href="mailto:sydwestdistrict@gmail.com" 
               className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors duration-200"
             >
               <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
@@ -49,16 +72,19 @@ export default function Footer() {
             </a>
             
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/psywest.aus?igsh=NHdmd2w1MWo0MnBs&utm_source=qr" 
               className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors duration-200"
             >
-              <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.418-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.928.875 1.418 2.026 1.418 3.323s-.49 2.448-1.418 3.244c-.875.807-2.026 1.297-3.323 1.297zm7.83-9.281H7.721v1.5h8.558v-1.5zm-5.03 2.25H7.721v1.5h3.528v-1.5z"/>
+              <svg className="w-5 h-5 text-black" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" ry="5" fill="currentColor" />
+                <rect x="5.2" y="5.2" width="13.6" height="13.6" rx="3.3" ry="3.3" fill="none" stroke="white" strokeWidth="1.7" />
+                <circle cx="12" cy="12" r="3.6" fill="none" stroke="white" strokeWidth="1.7" />
+                <circle cx="16.8" cy="7.2" r="0.9" fill="white" />
               </svg>
             </a>
             
             <a 
-              href="https://facebook.com" 
+              href="https://www.facebook.com/share/1P8YjARrXC/?mibextid=wwXIfr" 
               className="w-10 h-10 bg-white rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors duration-200"
             >
               <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24">

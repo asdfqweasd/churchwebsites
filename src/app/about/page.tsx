@@ -81,10 +81,7 @@ export default async function AboutPage() {
             {/* Right: Image - 616px × 388px */}
             <div className="flex justify-end">
               {img1Url && (
-                <div
-                  className="rounded-3xl overflow-hidden shadow-lg"
-                  style={{ width: "616px", height: "388px" }}
-                >
+                <div className="rounded-3xl overflow-hidden shadow-lg w-full max-w-[616px] aspect-[616/388]">
                   <img
                     src={img1Url}
                     alt={title1}
@@ -102,10 +99,7 @@ export default async function AboutPage() {
             {/* Left: Image - 611px × 892px */}
             <div className="flex justify-start">
               {img2Url && (
-                <div
-                  className="rounded-3xl overflow-hidden shadow-lg"
-                  style={{ width: "611px", height: "892px" }}
-                >
+                <div className="rounded-3xl overflow-hidden shadow-lg w-full max-w-[611px] aspect-[611/892]">
                   <img
                     src={img2Url}
                     alt={title2}
@@ -143,25 +137,22 @@ export default async function AboutPage() {
                   </p>
                 </div>
 
-                {/* Right: Image - 729px × 520px with blur background */}
-                <div className="flex justify-end relative">
+                {/* Right: Image - responsive with blur background */}
+                <div className="flex justify-end relative w-full">
                   {img3Url && (
                     <>
                       {/* Blurred background image */}
                       <div
-                        className="absolute inset-0 rounded-3xl blur-lg opacity-30"
+                        className="absolute inset-0 rounded-3xl blur-lg opacity-30 w-full h-full"
                         style={{
                           backgroundImage: `url(${img3Url})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
-                          width: "729px",
-                          height: "520px",
                         }}
                       />
                       {/* Actual image on top */}
                       <div
-                        className="rounded-3xl overflow-hidden shadow-lg relative z-10"
-                        style={{ width: "729px", height: "520px" }}
+                        className="rounded-3xl overflow-hidden shadow-lg relative z-10 w-full max-w-[729px] aspect-[729/520] mx-auto"
                       >
                         <img
                           src={img3Url}

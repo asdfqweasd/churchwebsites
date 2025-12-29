@@ -90,7 +90,7 @@ export default async function EventsPage() {
           {/* Title positioned partially on the border */}
           <div className="relative mb-0">
             <h2 className="text-4xl md:text-5xl font-semibold text-black inline-block px-6 relative z-10">
-              Come belong with us
+              Come join us
             </h2>
           </div>
 

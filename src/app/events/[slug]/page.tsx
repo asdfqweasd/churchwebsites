@@ -167,15 +167,15 @@ export default async function EventDetailPage({
 
         {/* Main Event Card */}
         <div className="relative">
-          <div className="space-y-6">
+          <div className="space-y-8 sm:space-y-10">
             {/* Gray Box with Title, Date, Time - with white square overlay */}
             <div className="relative">
               {/* Gray box with title and info - bottom layer (z-0) */}
-              <div className="bg-gray-200 rounded-3xl h-80 p-8 md:p-12 relative z-0">
-                <div className="space-y-8 pr-32">
+              <div className="bg-gray-200 rounded-3xl p-6 sm:p-8 md:p-12 relative z-0">
+                <div className="space-y-6 md:space-y-8 md:pr-32 pr-0">
                   {/* Title */}
-                  <div className="pt-4">
-                    <h1 className="text-6xl md:text-5xl font-bold text-black leading-tight">
+                  <div className="pt-2 sm:pt-4">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black leading-tight break-words">
                       {title}
                     </h1>
                   </div>
@@ -221,17 +221,34 @@ export default async function EventDetailPage({
                     )}
                   </div>
                 </div>
+
+                {/* Mobile tags inline */}
+                {(tagList.length > 0 || city) && (
+                  <div className="mt-6 flex flex-wrap gap-3 md:hidden">
+                    {tagList.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-4 py-2 rounded-lg text-xs bg-white text-black shadow"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {city && (
+                      <span className="px-4 py-2 rounded-lg text-xs bg-white text-black shadow">
+                        {city}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* White square and Tags container - middle layer (z-10) */}
-              <div className="absolute top-8 right-8 md:top-20 md:right-32 z-10 w-80">
-                {/* White square - below tags */}
-                <div className="absolute top-25 left-0 w-80 h-80 bg-white rounded-lg shadow-lg z-10"></div>
+              {tagList.length > 0 || city ? (
+                <div className="hidden md:block absolute top-8 right-8 md:top-20 md:right-32 z-10 w-80">
+                  {/* White square - below tags */}
+                  <div className="absolute top-25 left-0 w-80 h-80 bg-white rounded-lg shadow-lg z-10"></div>
 
-                {/* Tags - above white square, container center aligns with white square's vertical midline */}
-                {/* White square midline is at top-60 (top-20 + 40px) */}
-                {/* Tags container center at top-60, but tags stay above white square */}
-                {(tagList.length > 0 || city) && (
+                  {/* Tags - above white square */}
                   <div
                     className="absolute left-0 w-80 flex items-center justify-center flex-wrap gap-5 z-20"
                     style={{
@@ -255,30 +272,30 @@ export default async function EventDetailPage({
                       )}
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              ) : null}
             </div>
 
             {/* Description and Image - side by side with equal space */}
             <div className="mt-6">
-              <div className="bg-white rounded-3xl p-4 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              <div className="bg-white rounded-3xl p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
                 {/* Left: description with padding */}
-                <div className="p-4">
+                <div className="p-2 sm:p-4">
                   {description && (
-                    <p className="text-base leading-relaxed text-gray-700 whitespace-pre-line">
+                    <p className="text-base sm:text-lg leading-7 text-gray-700 whitespace-pre-line break-words max-w-2xl mx-auto lg:mx-0 text-left">
                       {description}
                     </p>
                   )}
                 </div>
 
-                <div className="relative flex justify-end lg:justify-start z-30">
+                <div className="relative flex justify-center lg:justify-start z-30">
                   {imageUrl || attr.image ? (
-                    <div className="relative w-full h-full md:w-4/5 md:h-100 md:ml-18 lg:-mt-32">
+                    <div className="relative w-full max-w-xl mx-auto lg:mx-0 lg:-mt-16">
                       {imageUrl ? (
                         <EventImage
                           src={imageUrl}
                           alt={title}
-                          className="w-full h-full object-cover rounded-3xl"
+                          className="w-full h-auto object-cover rounded-3xl"
                         />
                       ) : (
                         <div className="w-full h-full bg-gray-200 rounded-3xl flex items-center justify-center">
