@@ -123,7 +123,7 @@ export default async function EventDetailPage({
   const title: string = attr.title ?? "Event";
   const description: string = attr.description ?? "";
   const startDatetime: string | undefined = attr.startDatetime;
-  const endDatetime: string | undefined = attr.endDatetime;
+  const endDatetime: string | null | undefined = attr.endDatetime;
   const location: string | undefined = attr.location;
   const city: string | undefined = attr.city;
   const tagsRaw: string | undefined = attr.tags;
