@@ -1,103 +1,144 @@
-import Image from "next/image";
+// app/page.tsx
+import Link from 'next/link';
+import { fetchFromStrapi } from '@/lib/strapiClient';
+import { getStrapiImageUrl } from '@/lib/strapiImage';
+import EventCarousel from '@/components/EventCarousel';
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+export default async function HomePage() {
+  let homeData: any = null;
+  let eventsData: any[] = [];
+  let errorMessage: string | null = null;
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  try {
+    const homeRes = await fetchFromStrapi('/api/home-page?populate=*');
+    homeData = homeRes?.data;
+
+    const eventsRes = await fetchFromStrapi(
+      '/api/events?populate=*&pagination[pageSize]=100&sort=startDatetime:desc'
+    );
+    eventsData = Array.isArray(eventsRes?.data) ? eventsRes.data : [];
+  } catch (err: any) {
+    errorMessage = err?.message || String(err);
+    console.error('Error fetching home data:', errorMessage);
+  }
+
+  if (!homeData) {
+    return (
+      <main className="min-h-screen bg-white">
+        <div className="max-w-7xl mx-auto px-4 py-10">
+          <h1 className="text-2xl font-bold text-red-600">Error loading home page</h1>
+          {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+    );
+  }
+
+  const heroImageUrl = getStrapiImageUrl(homeData.heroImg);
+  const heroAlt = homeData.heroImg?.alternativeText || 'Church';
+  const heroDescription = homeData.heroDescription || '';
+
+  const ministriesImageUrl = getStrapiImageUrl(homeData.ministriesImg);
+  const ministriesAlt = homeData.ministriesImg?.alternativeText || 'Ministries';
+  const ministriesDescription = homeData.ministriesDescription || '';
+
+  const givingImageUrl = getStrapiImageUrl(homeData.givingImg);
+  const givingAlt = homeData.givingImg?.alternativeText || 'Giving';
+  const givingDescription = homeData.givingDescription || '';
+
+  return (
+    <main className="min-h-screen bg-white">
+      {/* Hero */}
+      <section className="relative w-full max-w-[1330px] h-[500px] sm:h-[620px] lg:h-[720px] xl:h-[820px] 2xl:h-[990px] rounded-[30px] overflow-hidden mx-auto px-4 sm:px-6 my-8">
+        {heroImageUrl && (
+          <img
+            src={heroImageUrl}
+            alt={heroAlt}
+            className="absolute inset-0 w-full h-full object-cover"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        )}
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative h-full flex flex-col items-center justify-center text-center px-4 sm:px-8">
+          <p className="text-white text-base sm:text-lg leading-relaxed mb-8 max-w-2xl">
+            {heroDescription}
+          </p>
+          <Link
+            href="/about"
+            className="inline-block bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold px-12 py-3 rounded-full transition-colors duration-200"
+          >
+            Visit
+          </Link>
+        </div>
+      </section>
+
+      {/* Events */}
+      {eventsData && eventsData.length > 0 ? (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-4xl font-bold">Events</h2>
+          </div>
+          <EventCarousel events={eventsData} />
+        </section>
+      ) : (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <p className="text-center text-gray-500">No events available</p>
+        </section>
+      )}
+
+      {/* Ministries */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[4.6rem] pb-[2.9rem]">
+        <div className="relative">
+          <h2 className="absolute top-0 -translate-y-1/2 left-4 sm:left-8 md:left-10 text-[48px] sm:text-[64px] md:text-[80px] leading-[1.5] tracking-[-0.011em] font-normal">
+            Ministries
+          </h2>
+          <div className="bg-gray-50 rounded-3xl p-6 sm:p-10 shadow-sm">
+            <div className="flex flex-col md:flex-row items-center gap-20 pt-[6.6rem] pb-[4.9rem]">
+              <div className="md:w-5/12 flex flex-col items-center md:items-start text-center md:text-left space-y-6">
+                <p className="text-gray-700 leading-relaxed">{ministriesDescription}</p>
+                <Link
+                  href="/ministries"
+                  className="inline-flex items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[249px] h-[79px] rounded-[30px] text-lg transition-colors duration-200 self-center"
+                >
+                  Visit
+                </Link>
+              </div>
+              {ministriesImageUrl && (
+                <div className="md:w-7/12 w-full">
+                  <img
+                    src={ministriesImageUrl}
+                    alt={ministriesAlt}
+                    className="w-full h-auto md:w-[466px] md:h-[333px] object-cover rounded-[30px] shadow-md"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Giving */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="flex flex-col md:flex-row items-center gap-10">
+          <div className="md:w-5/12 flex flex-col items-center md:items-center text-center md:text-left space-y-6">
+            <h2 className="text-6xl font-semibold">Giving</h2>
+            <p className="text-gray-700 leading-relaxed">{givingDescription}</p>
+            <Link
+              href="/giving"
+              className="inline-flex items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[249px] h-[79px] rounded-[30px] text-lg transition-colors duration-200 self-center"
+            >
+              Giving Now
+            </Link>
+          </div>
+          {givingImageUrl && (
+            <div className="md:w-[612px] w-full flex justify-center md:justify-end">
+              <img
+                src={givingImageUrl}
+                alt={givingAlt}
+                className="w-full h-auto md:w-[612px] md:h-[831px] object-cover rounded-[30px] shadow-md"
+              />
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
   );
 }
