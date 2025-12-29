@@ -1,3 +1,5 @@
+export const revalidate = 300;
+
 import { fetchFromStrapi } from "@/lib/strapiClient";
 import Link from "next/link";
 import { EventImage } from "@/components/EventImage";

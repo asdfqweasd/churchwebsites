@@ -1,3 +1,5 @@
+export const revalidate = 300;
+
 import { fetchFromStrapi } from "@/lib/strapiClient";
 import { EventsList, type Event } from "@/components/EventsList";
 import { EventImage } from "@/components/EventImage";

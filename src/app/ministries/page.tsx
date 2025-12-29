@@ -1,3 +1,5 @@
+export const revalidate = 300;
+
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { fetchFromStrapi } from "@/lib/strapiClient";
