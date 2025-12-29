@@ -128,7 +128,7 @@ export default async function EventDetailPage({
   const city: string | undefined = attr.city;
   const tagsRaw: string | undefined = attr.tags;
 
-  const { day, month } = formatDate(startDatetime);
+  const { day } = formatDate(startDatetime);
   const timeText = formatTimeRange(startDatetime, endDatetime);
   const tagList = tagsRaw
     ? tagsRaw

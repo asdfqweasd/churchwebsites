@@ -10,18 +10,33 @@ export default async function EventsPage() {
   ]);
 
   const page = pageRes?.data;
-  const rawEvents = Array.isArray(eventsRes?.data) ? eventsRes.data : [];
+
+  type StrapiEvent = {
+    id: number;
+    documentId?: string;
+    slug?: string;
+    title?: string;
+    startDatetime?: string;
+    endDatetime?: string | null;
+    tags?: string;
+    description?: string;
+    image?: Event["image"];
+  };
+
+  const rawEvents: StrapiEvent[] = Array.isArray(eventsRes?.data)
+    ? (eventsRes.data as StrapiEvent[])
+    : [];
 
   const events: Event[] = rawEvents.map((item) => ({
-    id: item.id as number,
-    documentId: item.documentId as string,
-    slug: item.slug as string,
-    title: (item.title as string) ?? "",
-    startDatetime: item.startDatetime as string,
-    endDatetime: (item.endDatetime as string | null | undefined) ?? null,
-    tags: (item.tags as string | undefined) ?? "",
-    description: (item.description as string | undefined) ?? "",
-    image: (item.image as Event["image"]) ?? null,
+    id: item.id,
+    documentId: item.documentId ?? "",
+    slug: item.slug ?? "",
+    title: item.title ?? "",
+    startDatetime: item.startDatetime ?? "",
+    endDatetime: item.endDatetime ?? null,
+    tags: item.tags ?? "",
+    description: item.description ?? "",
+    image: item.image ?? null,
   }));
 
   const heroTitle: string = page?.heroTitle || "Upcoming Events";
