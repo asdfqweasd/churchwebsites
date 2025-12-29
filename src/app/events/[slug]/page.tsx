@@ -124,11 +124,12 @@ export default async function EventDetailPage({
   const description: string = attr.description ?? "";
   const startDatetime: string | undefined = attr.startDatetime;
   const endDatetime: string | null | undefined = attr.endDatetime;
-  const location: string | undefined = attr.location;
+  // location currently unused in UI; keep accessible if needed later
+  // const location: string | undefined = attr.location;
   const city: string | undefined = attr.city;
   const tagsRaw: string | undefined = attr.tags;
 
-  const { day } = formatDate(startDatetime);
+  const { day: _day } = formatDate(startDatetime);
   const timeText = formatTimeRange(startDatetime, endDatetime);
   const tagList = tagsRaw
     ? tagsRaw
