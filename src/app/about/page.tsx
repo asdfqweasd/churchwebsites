@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { fetchFromStrapi } from "@/lib/strapiClient"; // 根据你的项目结构调整路径
-import { getStrapiImageUrl, type StrapiImage } from "@/lib/strapiImage"; // 同上
+import { fetchFromStrapi } from "@/lib/strapiClient"; 
+import { getStrapiImageUrl, type StrapiImage } from "@/lib/strapiImage"; 
 
 type AboutData = {
   title1?: string;
