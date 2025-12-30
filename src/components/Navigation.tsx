@@ -16,9 +16,9 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="relative bg-white">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-24">
+    <nav className="bg-white">
+      <div className="relative max-w-[1330px] mx-auto">
+        <div className="grid grid-cols-[auto,1fr,auto] items-center h-24">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <img
@@ -29,13 +29,13 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          <div className="hidden md:block absolute left-1/2 -translate-x-1/2">
             <div className="flex items-center gap-10 lg:gap-14">
               {navItems.map((item) => (
                 <div key={item.name}>
                   <Link
                     href={item.href}
-                    className="text-black hover:text-gray-600 px-3 py-2 text-lg font-normal transition-colors duration-200"
+                    className="whitespace-nowrap text-black hover:text-gray-600 px-3 py-2 text-lg font-normal transition-colors duration-200"
                   >
                     {item.name}
                   </Link>

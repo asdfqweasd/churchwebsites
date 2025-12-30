@@ -91,13 +91,23 @@ export default async function HomePage() {
           />
         )}
         <div className="absolute inset-0 bg-black/50" />
-        <div className="relative h-full flex flex-col items-center justify-center text-center px-4 sm:px-8">
-          <p className="text-white text-base sm:text-lg leading-relaxed mb-8 max-w-2xl">
+        <div className="relative h-full flex flex-col items-center justify-start text-center px-4 sm:px-8 pt-10 sm:pt-16 md:pt-[140px] gap-10">
+          <p
+            className="text-white max-w-2xl"
+            style={{
+              fontFamily: '"Sans Serif Collection", sans-serif',
+              fontWeight: 400,
+              fontStyle: 'normal',
+              fontSize: '18px',
+              lineHeight: '150%',
+              letterSpacing: '-0.011em',
+            }}
+          >
             {heroDescription}
           </p>
           <Link
             href="/about"
-            className="inline-block bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold px-12 py-3 rounded-full transition-colors duration-200"
+            className="inline-flex text-4xl items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[257px] h-[79px] rounded-[30px] transition-colors duration-200"
           >
             Visit
           </Link>
@@ -130,7 +140,7 @@ export default async function HomePage() {
                 <p className="text-gray-700 leading-relaxed">{ministriesDescription}</p>
                 <Link
                   href="/ministries"
-                  className="inline-flex items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[249px] h-[79px] rounded-[30px] text-lg transition-colors duration-200 self-center"
+                  className="inline-flex text-4xl items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[249px] h-[79px] rounded-[30px] transition-colors duration-200 self-center"
                 >
                   Visit
                 </Link>
@@ -153,11 +163,11 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="flex flex-col md:flex-row items-center gap-10">
           <div className="md:w-5/12 flex flex-col items-center md:items-center text-center md:text-left space-y-6">
-            <h2 className="text-6xl font-semibold">Giving</h2>
+            <h2 className="text-[48px] sm:text-[64px] md:text-[80px]font-semibold">Giving</h2>
             <p className="text-gray-700 leading-relaxed">{givingDescription}</p>
             <Link
               href="/giving"
-              className="inline-flex items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[249px] h-[79px] rounded-[30px] text-lg transition-colors duration-200 self-center"
+              className="inline-flex text-4xl items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[249px] h-[79px] rounded-[30px] transition-colors duration-200 self-center"
             >
               Giving Now
             </Link>

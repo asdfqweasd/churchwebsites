@@ -1,61 +1,61 @@
 export default function Footer() {
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-[#F6F5F4] text-gray-900">
       {/* Location and Service Times Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold uppercase tracking-wide">
             LOCATION AND SERVICE TIMES
           </h2>
-          <div className="w-full h-px bg-white mt-4"></div>
+          <div className="w-full h-px bg-gray-300 mt-4"></div>
         </div>
 
         <div className="flex justify-center">
           {/* Location & Service Times */}
-          <div className="w-full max-w-3xl bg-white/5 border border-white/10 rounded-2xl p-6 space-y-6 text-center">
+          <div className="w-full max-w-3xl bg-white border border-gray-200 rounded-2xl p-6 space-y-6 text-center shadow-sm">
             <div className="space-y-1">
               <h3 className="font-bold text-lg">Address</h3>
-              <p className="text-sm text-white/80">2/39-41 Fourth Avenue Blacktown NSW, 2148</p>
+              <p className="text-sm text-gray-700">2/39-41 Fourth Avenue Blacktown NSW, 2148</p>
             </div>
 
             <div className="space-y-3">
-              <h3 className="font-bold text-lg">Service Times</h3>
-              <div className="space-y-3">
-                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-2 sm:gap-3">
-                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-semibold">Wednesday</span>
+              <h3 className="font-bold text-lg text-center">Service Times</h3>
+              <div className="space-y-3 ml-40 flex flex-col items-center">
+                <div className="flex items-start gap-3 text-left w-full max-w-md justify-start">
+                  <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 whitespace-nowrap">Wednesday</span>
                   <div className="text-sm leading-6">
                     <p className="font-semibold">Bible Studies</p>
-                    <p className="text-white/80">7:00 – 8:15 PM</p>
+                    <p className="text-gray-700">7:00 - 8:15 PM</p>
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-2 sm:gap-3">
-                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-semibold">Friday</span>
+                <div className="flex items-start gap-3 text-left w-full max-w-md justify-start">
+                  <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 whitespace-nowrap">Friday</span>
                   <div className="text-sm leading-6">
                     <p className="font-semibold">Evening Service</p>
-                    <p className="text-white/80">7:00 – 8:30 PM</p>
+                    <p className="text-gray-700">7:00 - 8:30 PM</p>
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-2 sm:gap-3">
-                  <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-semibold">Sunday</span>
+                <div className="flex items-start gap-3 text-left w-full max-w-md justify-start">
+                  <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 whitespace-nowrap">Sunday</span>
                   <div className="text-sm leading-6 space-y-1">
-                    <p><span className="font-semibold">English:</span> 9:00 – 10:45 AM</p>
-                    <p><span className="font-semibold">Akan:</span> 11:00 – 1:00 PM</p>
-                    <p><span className="font-semibold">Swahili:</span> 1:15 – 2:30 PM</p>
+                    <p><span className="font-semibold">English:</span> 9:00 - 10:45 AM</p>
+                    <p><span className="font-semibold">Akan:</span> 11:00 - 1:00 PM</p>
+                    <p><span className="font-semibold">Swahili:</span> 1:15 - 2:30 PM</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-white/10 space-y-2">
+            <div className="pt-2 border-t border-gray-200 space-y-2">
               <h3 className="font-bold text-lg">Mailing Address</h3>
-              <p className="text-sm text-white/80">sydwestdistrict@gmail.com</p>
+              <p className="text-sm text-gray-700">sydwestdistrict@gmail.com</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Divider */}
-      <div className="w-full h-px bg-white"></div>
+      <div className="w-full h-px bg-gray-300"></div>
 
       {/* Social Media and Copyright Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -95,7 +95,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="text-sm uppercase tracking-wide">
-            COPYRIGHT © The Church Of Pentecost Sydney West District 2025
+            COPYRIGHT (C) The Church Of Pentecost Sydney West District 2025
           </p>
         </div>
       </div>
