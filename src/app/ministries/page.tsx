@@ -172,7 +172,7 @@ export default async function MinistriesPage() {
             href="/"
             className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900"
           >
-            ← Back to home
+            Back to home
           </Link>
         </div>
       </div>

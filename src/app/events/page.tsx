@@ -53,7 +53,7 @@ export default async function EventsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Side - Title and Description */}
             <div className="space-y-6">
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-black leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black leading-tight">
                 {heroTitle.split("\n").map((line, i) => (
                   <span key={i}>
                     {line}
@@ -74,10 +74,10 @@ export default async function EventsPage() {
                 <EventImage
                   src={heroImageUrl}
                   alt="Upcoming Events"
-                  className="w-full h-[500px] object-cover rounded-3xl"
+                  className="w-full aspect-[4/3] sm:h-[420px] lg:h-[500px] object-cover rounded-3xl"
                 />
               ) : (
-                <div className="w-full h-[500px] bg-gray-200 rounded-3xl flex items-center justify-center">
+                <div className="w-full aspect-[4/3] sm:h-[420px] lg:h-[500px] bg-gray-200 rounded-3xl flex items-center justify-center">
                   <p className="text-gray-400">Image coming soon</p>
                 </div>
               )}

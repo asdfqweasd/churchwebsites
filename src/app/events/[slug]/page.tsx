@@ -5,21 +5,6 @@ import Link from "next/link";
 import { EventImage } from "@/components/EventImage";
 import { getStrapiImageUrl } from "@/lib/strapiImage";
 
-const MONTH_NAMES = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
 function formatPreciseTime(dateString?: string | null) {
   if (!dateString) return "";
   const d = new Date(dateString);
@@ -30,17 +15,6 @@ function formatPreciseTime(dateString?: string | null) {
   if (hour === 0) hour = 12;
   else if (hour > 12) hour -= 12;
   return `${hour}:${minute}${ampm}`;
-}
-
-function formatDate(dateString?: string | null) {
-  if (!dateString) return { day: "", month: "", fullDate: "" };
-  const d = new Date(dateString);
-  if (isNaN(d.getTime())) return { day: "", month: "", fullDate: "" };
-  const day = d.getDate().toString().padStart(2, "0");
-  const month = MONTH_NAMES[d.getMonth()];
-  const year = d.getFullYear();
-  const fullDate = `${day} ${month} ${year}`;
-  return { day, month, fullDate };
 }
 
 function formatTimeRange(start?: string | null, end?: string | null) {
@@ -131,7 +105,6 @@ export default async function EventDetailPage({
   const city: string | undefined = attr.city;
   const tagsRaw: string | undefined = attr.tags;
 
-  const { day: _day } = formatDate(startDatetime);
   const timeText = formatTimeRange(startDatetime, endDatetime);
   const tagList = tagsRaw
     ? tagsRaw

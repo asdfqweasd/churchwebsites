@@ -72,7 +72,7 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Left: Title and Description */}
             <div>
-              <h1 className="text-5xl font-bold mb-8">{title1}</h1>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-8">{title1}</h1>
               <p className="text-lg text-gray-700 leading-relaxed">
                 {title1Description}
               </p>
@@ -111,7 +111,7 @@ export default async function AboutPage() {
 
             {/* Right: Title, Description and Button */}
             <div>
-              <h2 className="text-4xl font-bold mb-6">{title2}</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6">{title2}</h2>
               <p className="text-lg text-gray-700 leading-relaxed mb-8">
                 {title2Description}
               </p>
@@ -166,7 +166,7 @@ export default async function AboutPage() {
               </div>
             </div>
 
-            <h2 className="absolute -top-10 left-8 text-6xl font-bold z-20">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold md:absolute md:-top-10 md:left-8 z-20 mt-8 md:mt-0">
               {title3}
             </h2>
           </div>

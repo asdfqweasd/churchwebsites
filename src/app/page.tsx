@@ -2,21 +2,203 @@ export const revalidate = 300;
 
 /* eslint-disable @next/next/no-img-element */
 // app/page.tsx
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { fetchFromStrapi } from "@/lib/strapiClient";
 import { getStrapiImageUrl, type StrapiImage } from "@/lib/strapiImage";
 import EventCarousel from "@/components/EventCarousel";
 import type { Event } from "@/components/EventsList";
 
+type RichTextNode = {
+  type?: string;
+  children?: RichTextNode[];
+  text?: string;
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strikethrough?: boolean;
+  code?: boolean;
+  url?: string;
+  newTab?: boolean;
+  level?: number;
+  format?: "ordered" | "unordered";
+};
+
 type HomeData = {
   heroImg?: StrapiImage | null;
   heroDescription?: string;
+  heroDescriptionRichtext?: RichTextNode[] | null;
   ministriesImg?: StrapiImage | null;
   ministriesDescription?: string;
   givingImg?: StrapiImage | null;
   givingDescription?: string;
   [key: string]: unknown;
 };
+
+const heroTextStyle = {
+  fontFamily: '"Sans Serif Collection", sans-serif',
+  fontStyle: "normal",
+  letterSpacing: "-0.011em",
+};
+
+function applyTextMarks(text: string, node: RichTextNode): ReactNode {
+  const parts = text.split("\n");
+  const withBreaks = parts.flatMap<ReactNode>((part, idx) =>
+    idx === 0 ? [part] : [<br key={`br-${idx}`} />, part]
+  );
+
+  let content: ReactNode = withBreaks;
+
+  if (node.bold) {
+    content = <strong>{content}</strong>;
+  }
+  if (node.italic) {
+    content = <em>{content}</em>;
+  }
+  if (node.underline) {
+    content = <u>{content}</u>;
+  }
+  if (node.strikethrough) {
+    content = <s>{content}</s>;
+  }
+  if (node.code) {
+    content = (
+      <code className="px-1 py-0.5 rounded bg-white/10 font-mono text-sm">
+        {content}
+      </code>
+    );
+  }
+
+  return content;
+}
+
+function renderRichTextNode(node: RichTextNode, key: string): ReactNode {
+  const children = (node.children ?? []).map((child, idx) =>
+    renderRichTextNode(child, `${key}-${idx}`)
+  );
+
+  const fallback =
+    typeof node.text === "string" && node.text.length > 0
+      ? applyTextMarks(node.text, node)
+      : null;
+
+  const isPlainTextNode =
+    (!node.type || node.type === "text") && (node.children ?? []).length === 0;
+
+  if (isPlainTextNode && fallback) {
+    return (
+      <span key={key} className="leading-[1.6]">
+        {fallback}
+      </span>
+    );
+  }
+
+  switch (node.type) {
+    case "heading": {
+      const level = Math.min(Math.max(node.level ?? 2, 1), 6) as 1 | 2 | 3 | 4 | 5 | 6;
+      const HeadingTag = `h${level}` as const;
+      const headingClass =
+        level === 1
+          ? "text-3xl sm:text-2xl md:text-4xl font-bold leading-tight text-center"
+          : level === 2
+          ? "text-2xl sm:text-lg font-semibold leading-tight"
+          : "text-xl sm:text-lg font-semibold leading-tight";
+      return (
+        <HeadingTag key={key} className={headingClass}>
+          {children.length > 0 ? children : fallback}
+        </HeadingTag>
+      );
+    }
+    case "paragraph":
+      return (
+        <p key={key} className="text-base sm:text-lg leading-[1.6]">
+          {children.length > 0 ? children : fallback}
+        </p>
+      );
+    case "list": {
+      const isOrdered = node.format === "ordered";
+      const ListTag = isOrdered ? "ol" : "ul";
+      const listChildren =
+        children.length > 0
+          ? children
+          : fallback
+          ? [<li key={`${key}-item`}>{fallback}</li>]
+          : null;
+      return (
+        <ListTag
+          key={key}
+          className={`list-inside ${isOrdered ? "list-decimal" : "list-disc"} pl-4 space-y-2 text-left inline-block text-base sm:text-lg leading-[1.6]`}
+        >
+          {listChildren}
+        </ListTag>
+      );
+    }
+    case "list-item":
+      return (
+        <li key={key} className="text-base sm:text-lg leading-[1.6]">
+          {children.length > 0 ? children : fallback}
+        </li>
+      );
+    case "quote":
+      return (
+        <blockquote
+          key={key}
+          className="border-l-4 border-white/50 pl-4 italic text-base sm:text-lg leading-[1.6] text-left inline-block"
+        >
+          {children.length > 0 ? children : fallback}
+        </blockquote>
+      );
+    case "link": {
+      const href = node.url ?? "#";
+      const isExternal = /^https?:\/\//i.test(href);
+      return (
+        <a
+          key={key}
+          href={href}
+          target={node.newTab || isExternal ? "_blank" : undefined}
+          rel={node.newTab || isExternal ? "noreferrer" : undefined}
+          className="underline underline-offset-2"
+        >
+          {children.length > 0 ? children : fallback}
+        </a>
+      );
+    }
+    default:
+      return (
+        <span key={key} className="leading-[1.6]">
+          {children.length > 0 ? children : fallback}
+        </span>
+      );
+  }
+}
+
+function HeroRichText({
+  richText,
+  fallbackText,
+}: {
+  richText?: RichTextNode[] | null;
+  fallbackText: string;
+}) {
+  if (!richText || richText.length === 0) {
+    return (
+      <p
+        className="text-white max-w-2xl text-sm sm:text-base leading-[1.6]"
+        style={heroTextStyle}
+      >
+        {fallbackText}
+      </p>
+    );
+  }
+
+  return (
+    <div
+      className="text-white max-w-2xl space-y-3 sm:space-y-4 text-left sm:text-center"
+      style={heroTextStyle}
+    >
+      {richText.map((node, idx) => renderRichTextNode(node, `hero-${idx}`))}
+    </div>
+  );
+}
 
 export default async function HomePage() {
   let homeData: HomeData | null = null;
@@ -66,6 +248,9 @@ export default async function HomePage() {
     (homeData.heroImg as { alternativeText?: string } | undefined)?.alternativeText ||
     "Church";
   const heroDescription = homeData.heroDescription || "";
+  const heroDescriptionRichtext = Array.isArray(homeData.heroDescriptionRichtext)
+    ? (homeData.heroDescriptionRichtext as RichTextNode[])
+    : null;
 
   const ministriesImageUrl = getStrapiImageUrl(homeData.ministriesImg);
   const ministriesAlt =
@@ -82,7 +267,7 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative w-full max-w-[1330px] h-[500px] sm:h-[620px] lg:h-[720px] xl:h-[820px] 2xl:h-[990px] rounded-[30px] overflow-hidden mx-auto px-4 sm:px-6 my-8">
+      <section className="relative w-full max-w-[1330px] h-[420px] sm:h-[520px] lg:h-[700px] xl:h-[820px] 2xl:h-[990px] rounded-[30px] overflow-hidden mx-auto px-4 sm:px-6 my-8">
         {heroImageUrl && (
           <img
             src={heroImageUrl}
@@ -91,23 +276,11 @@ export default async function HomePage() {
           />
         )}
         <div className="absolute inset-0 bg-black/50" />
-        <div className="relative h-full flex flex-col items-center justify-start text-center px-4 sm:px-8 pt-10 sm:pt-16 md:pt-[140px] gap-10">
-          <p
-            className="text-white max-w-2xl"
-            style={{
-              fontFamily: '"Sans Serif Collection", sans-serif',
-              fontWeight: 400,
-              fontStyle: 'normal',
-              fontSize: '18px',
-              lineHeight: '150%',
-              letterSpacing: '-0.011em',
-            }}
-          >
-            {heroDescription}
-          </p>
+        <div className="relative h-full flex flex-col items-center justify-center md:justify-start text-left sm:text-center px-4 sm:px-8 pt-2 sm:pt-12 md:pt-[90px] lg:pt-[90px] gap-6 sm:gap-8">
+          <HeroRichText richText={heroDescriptionRichtext} fallbackText={heroDescription} />
           <Link
             href="/about"
-            className="inline-flex text-4xl items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[257px] h-[79px] rounded-[30px] transition-colors duration-200"
+            className="inline-flex text-2xl sm:text-3xl items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-full max-w-[220px] h-14 sm:h-[68px] rounded-[30px] transition-colors duration-200"
           >
             Visit
           </Link>

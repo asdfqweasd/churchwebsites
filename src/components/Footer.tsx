@@ -12,43 +12,57 @@ export default function Footer() {
 
         <div className="flex justify-center">
           {/* Location & Service Times */}
-          <div className="w-full max-w-3xl bg-white border border-gray-200 rounded-2xl p-6 space-y-6 text-center shadow-sm">
-            <div className="space-y-1">
-              <h3 className="font-bold text-lg">Address</h3>
-              <p className="text-sm text-gray-700">2/39-41 Fourth Avenue Blacktown NSW, 2148</p>
-            </div>
+          <div className="w-full max-w-4xl bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 space-y-6 text-left shadow-sm">
+            <div className="max-w-xl mx-auto space-y-6 md:pl-24">
+              <div className="space-y-1">
+                <h3 className="font-bold text-lg">Address</h3>
+                <p className="text-sm text-gray-700">2/39-41 Fourth Avenue Blacktown NSW, 2148</p>
+              </div>
 
-            <div className="space-y-3">
-              <h3 className="font-bold text-lg text-center">Service Times</h3>
-              <div className="space-y-3 ml-40 flex flex-col items-center">
-                <div className="flex items-start gap-3 text-left w-full max-w-md justify-start">
-                  <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 whitespace-nowrap">Wednesday</span>
-                  <div className="text-sm leading-6">
-                    <p className="font-semibold">Bible Studies</p>
-                    <p className="text-gray-700">7:00 - 8:15 PM</p>
+              <div className="space-y-4">
+                <h3 className="font-bold text-lg">Service Times</h3>
+                <div className="space-y-4 flex flex-col items-stretch text-left">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full">
+                    <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 self-start whitespace-nowrap">
+                      Wednesday
+                    </span>
+                    <div className="text-sm leading-6">
+                      <p className="font-semibold">Bible Studies</p>
+                      <p className="text-gray-700">7:00 - 8:15 PM</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-3 text-left w-full max-w-md justify-start">
-                  <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 whitespace-nowrap">Friday</span>
-                  <div className="text-sm leading-6">
-                    <p className="font-semibold">Evening Service</p>
-                    <p className="text-gray-700">7:00 - 8:30 PM</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full">
+                    <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 self-start whitespace-nowrap">
+                      Friday
+                    </span>
+                    <div className="text-sm leading-6">
+                      <p className="font-semibold">Evening Service</p>
+                      <p className="text-gray-700">7:00 - 8:30 PM</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-start gap-3 text-left w-full max-w-md justify-start">
-                  <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 whitespace-nowrap">Sunday</span>
-                  <div className="text-sm leading-6 space-y-1">
-                    <p><span className="font-semibold">English:</span> 9:00 - 10:45 AM</p>
-                    <p><span className="font-semibold">Akan:</span> 11:00 - 1:00 PM</p>
-                    <p><span className="font-semibold">Swahili:</span> 1:15 - 2:30 PM</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full">
+                    <span className="px-3 py-1 rounded-full bg-gray-200 text-xs font-semibold text-gray-900 self-start whitespace-nowrap">
+                      Sunday
+                    </span>
+                    <div className="text-sm leading-6 space-y-1">
+                      <p>
+                        <span className="font-semibold">English:</span> 9:00 - 10:45 AM
+                      </p>
+                      <p>
+                        <span className="font-semibold">Akan:</span> 11:00 - 1:00 PM
+                      </p>
+                      <p>
+                        <span className="font-semibold">Swahili:</span> 1:15 - 2:30 PM
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="pt-2 border-t border-gray-200 space-y-2">
-              <h3 className="font-bold text-lg">Mailing Address</h3>
-              <p className="text-sm text-gray-700">sydwestdistrict@gmail.com</p>
+              <div className="pt-2 border-t border-gray-200 space-y-2">
+                <h3 className="font-bold text-lg">Mailing Address</h3>
+                <p className="text-sm text-gray-700">sydwestdistrict@gmail.com</p>
+              </div>
             </div>
           </div>
         </div>

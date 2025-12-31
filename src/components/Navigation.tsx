@@ -17,7 +17,7 @@ export default function Navigation() {
 
   return (
     <nav className="bg-white">
-      <div className="relative max-w-[1330px] mx-auto">
+      <div className="relative max-w-[1330px] mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-[auto,1fr,auto] items-center h-24">
           {/* Logo */}
           <Link href="/" className="flex items-center">
