@@ -1,16 +1,23 @@
+import ContactForm from "./ContactForm";
+
 export default function Contact() {
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">Contact</h1>
-          <div className="max-w-3xl mx-auto">
-            <p className="text-lg text-gray-600 mb-8">
-              Content will be added here...
-            </p>
-          </div>
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="space-y-3 mb-10">
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[#00B7E3]">
+            Get in touch
+          </p>
+          <h1
+            className="text-[64px] sm:text-[72px] lg:text-[80px] font-normal leading-[1.5] tracking-[-0.011em] text-gray-900 text-left"
+            style={{ fontFamily: '"Sans Serif Collection", "Helvetica Neue", Arial, sans-serif' }}
+          >
+            Contact us
+          </h1>
         </div>
-      </div>
+
+        <ContactForm />
+      </section>
     </div>
   );
 }
