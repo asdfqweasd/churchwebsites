@@ -51,9 +51,9 @@ export default function Footer() {
                       <p>
                         <span className="font-semibold">Akan:</span> 11:00 - 1:00 PM
                       </p>
-                      <p>
+                      {/* <p>
                         <span className="font-semibold">Swahili:</span> 1:15 - 2:30 PM
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </div>

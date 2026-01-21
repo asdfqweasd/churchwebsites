@@ -41,7 +41,7 @@ export default async function AboutPage() {
     );
   }
 
-  // 提取数据
+
   const title1 = aboutData.title1 || "About Us";
   const title1Description = aboutData.title1Description || "";
   const title2 = aboutData.title2 || "Our Mission";
@@ -49,7 +49,7 @@ export default async function AboutPage() {
   const title3 = aboutData.title3 || "Our Vision";
   const title3Description = aboutData.title3Description || "";
 
-  // 获取图片 URLs
+
   const img1Url = getStrapiImageUrl(aboutData.img1);
   const img2Url = getStrapiImageUrl(aboutData.img2);
   const img3Url = getStrapiImageUrl(aboutData.img3);

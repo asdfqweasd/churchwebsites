@@ -11,7 +11,7 @@ export default function Navigation() {
     { name: 'About Us', href: '/about' },
     { name: 'Ministries', href: '/ministries' },
     { name: 'Events', href: '/events' },
-    { name: 'Giving', href: '/giving' },
+    // { name: 'Giving', href: '/giving' },
     { name: 'Contact Us', href: '/contact' }
   ];
 

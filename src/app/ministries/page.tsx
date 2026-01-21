@@ -7,6 +7,7 @@ import { getStrapiImageUrl, type StrapiImage } from "@/lib/strapiImage";
 
 export default async function MinistriesPage() {
   type MinistriesData = {
+    title1?: string;
     title1Description?: string;
     title2?: string;
     title2Description?: string;
@@ -40,15 +41,14 @@ export default async function MinistriesPage() {
           <h1 className="text-2xl font-bold text-red-600">
             Error loading ministries
           </h1>
-          {errorMessage && (
-            <p className="text-red-500 mt-2">{errorMessage}</p>
-          )}
+          {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
         </div>
       </main>
     );
   }
 
   const introDescription = ministriesData.title1Description || "";
+  const title1 = ministriesData.title1 || "Ministries";
 
   const ministries = [
     {
@@ -81,6 +81,7 @@ export default async function MinistriesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:items-center">
             {/* Left: Intro Description */}
             <div className="max-w-xl">
+              <h1 className="text-4xl sm:text-5xl font-bold mb-8">{title1}</h1>
               <p className="text-base text-gray-800 leading-relaxed whitespace-pre-wrap">
                 {introDescription}
               </p>
@@ -109,11 +110,9 @@ export default async function MinistriesPage() {
 
             return (
               <section key={index}>
-                {/* 共用一个 grid，左右交错 */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:items-center">
                   {isEven ? (
                     <>
-                      {/* 左图右文 */}
                       <div className="flex justify-center lg:justify-start">
                         {imageUrl && (
                           <div className="rounded-3xl overflow-hidden shadow-lg flex-shrink-0 w-full max-w-[676px] aspect-[676/552]">
