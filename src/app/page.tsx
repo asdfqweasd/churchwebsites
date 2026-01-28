@@ -264,6 +264,8 @@ export default async function HomePage() {
     "Giving";
   const givingDescription = homeData.givingDescription || "";
 
+  const SHOW_GIVING = false;
+
   return (
     <main className="min-h-screen bg-white">
       {/* Hero */}
@@ -331,31 +333,31 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Giving */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="flex flex-col md:flex-row items-center gap-10">
-          <div className="md:w-5/12 flex flex-col items-center md:items-center text-center md:text-left space-y-6">
-            <h2 className="text-[48px] sm:text-[64px] md:text-[80px]font-semibold">Giving</h2>
-            <p className="text-gray-700 leading-relaxed">{givingDescription}</p>
-            <Link
-              href="/giving"
-              className="inline-flex text-4xl items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[249px] h-[79px] rounded-[30px] transition-colors duration-200 self-center"
-            >
-              Giving Now
-            </Link>
-          </div>
-          {givingImageUrl && (
-            <div className="md:w-[612px] w-full flex justify-center md:justify-end">
-              <img
-                src={givingImageUrl}
-                alt={givingAlt}
-                className="w-full h-auto md:w-[612px] md:h-[831px] object-cover rounded-[30px] shadow-md"
-              />
+      {SHOW_GIVING && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+          <div className="flex flex-col md:flex-row items-center gap-10">
+            <div className="md:w-5/12 flex flex-col items-center md:items-center text-center md:text-left space-y-6">
+              <h2 className="text-[48px] sm:text-[64px] md:text-[80px]font-semibold">Giving</h2>
+              <p className="text-gray-700 leading-relaxed">{givingDescription}</p>
+              <Link
+                href="/giving"
+                className="inline-flex text-4xl items-center justify-center bg-[#00B7E3] hover:bg-[#00A6D1] text-black font-semibold w-[249px] h-[79px] rounded-[30px] transition-colors duration-200 self-center"
+              >
+                Giving Now
+              </Link>
             </div>
-          )}
-        </div>
-      </section>
+            {givingImageUrl && (
+              <div className="md:w-[612px] w-full flex justify-center md:justify-end">
+                <img
+                  src={givingImageUrl}
+                  alt={givingAlt}
+                  className="w-full h-auto md:w-[612px] md:h-[831px] object-cover rounded-[30px] shadow-md"
+                />
+              </div>
+            )}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

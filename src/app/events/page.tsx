@@ -1,14 +1,15 @@
 export const revalidate = 300;
 
 import { fetchFromStrapi } from "@/lib/strapiClient";
-import { EventsList, type Event } from "@/components/EventsList";
+import type { Event } from "@/components/EventsList";
 import { EventImage } from "@/components/EventImage";
 import { getStrapiImageUrl } from "@/lib/strapiImage";
+import { EventsSection } from "@/components/EventsSection";
 
 export default async function EventsPage() {
   const [pageRes, eventsRes] = await Promise.all([
     fetchFromStrapi("/api/events-page?populate=heroImage"),
-    fetchFromStrapi("/api/events?sort=startDatetime:asc&populate=image"),
+    fetchFromStrapi("/api/events?sort=startDatetime:desc&populate=image"),
   ]);
 
   const page = pageRes?.data;
@@ -85,38 +86,7 @@ export default async function EventsPage() {
           </div>
         </section>
 
-        {/* Events List Section */}
-        <section className="relative mt-16">
-          {/* Title positioned partially on the border */}
-          <div className="relative mb-0">
-            <h2 className="text-4xl md:text-5xl font-semibold text-black inline-block px-6 relative z-10">
-              Come join us
-            </h2>
-          </div>
-
-          {/* Content without border - negative margin to overlap with title */}
-          <div className="bg-gray-50 rounded-3xl p-8 md:p-12 -mt-6 pt-14">
-            <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-8">
-            {/* Filters Sidebar */}
-            <div className="space-y-4">
-              {["Search", "City", "Location", "Ministry"].map((label) => (
-                <div key={label}>
-                  <p className="text-xs mb-1 text-gray-600">{label}</p>
-                  <input
-                    disabled
-                    className="bg-white w-full h-10 rounded-full px-4 border border-gray-200 text-sm"
-                  />
-                </div>
-              ))}
-            </div>
-
-              {/* Events List */}
-              <div>
-                <EventsList events={events} />
-              </div>
-            </div>
-          </div>
-        </section>
+        <EventsSection events={events} />
       </div>
     </main>
   );

@@ -65,14 +65,61 @@ function formatTimeDisplay(start: string, end?: string | null) {
   return `${startStr} - ${endStr}`;
 }
 
-export function EventsList({ events }: { events: Event[] }) {
+function normalizeForSearch(value: string) {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function isSubsequence(needle: string, haystack: string) {
+  if (!needle) return true;
+  let i = 0;
+  for (const ch of haystack) {
+    if (ch === needle[i]) i += 1;
+    if (i >= needle.length) return true;
+  }
+  return false;
+}
+
+function fuzzyMatch(needle: string, haystack: string) {
+  const n = normalizeForSearch(needle);
+  const h = normalizeForSearch(haystack);
+  if (!n) return true;
+  if (!h) return false;
+  if (h.includes(n)) return true;
+  return isSubsequence(n, h);
+}
+
+export function EventsList({
+  events,
+  searchTerm = "",
+  ministryTerm = "",
+}: {
+  events: Event[];
+  searchTerm?: string;
+  ministryTerm?: string;
+}) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [rippleId, setRippleId] = useState<number | null>(null);
 
   type Group = { label: string; items: Event[] };
   const groups: Group[] = [];
 
-  events.forEach((e) => {
+  const sortedEvents = [...events].sort((a, b) => {
+    const aTime = new Date(a.startDatetime).getTime();
+    const bTime = new Date(b.startDatetime).getTime();
+    const safeATime = Number.isNaN(aTime) ? -Infinity : aTime;
+    const safeBTime = Number.isNaN(bTime) ? -Infinity : bTime;
+    return safeBTime - safeATime;
+  });
+
+  const filteredEvents = sortedEvents.filter((e) => {
+    const matchesTitle = fuzzyMatch(searchTerm, e.title);
+    if (!matchesTitle) return false;
+    if (!ministryTerm.trim()) return true;
+    const tagsText = e.tags ? e.tags.replace(/[,/|]+/g, " ") : "";
+    return fuzzyMatch(ministryTerm, tagsText);
+  });
+
+  filteredEvents.forEach((e) => {
     if (!e.startDatetime) return;
     const label = formatMonthYear(e.startDatetime) || "Other";
 

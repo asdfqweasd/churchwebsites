@@ -14,6 +14,17 @@ export default function Footer() {
           {/* Location & Service Times */}
           <div className="w-full max-w-4xl bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 space-y-6 text-left shadow-sm">
             <div className="max-w-xl mx-auto space-y-6 md:pl-24">
+              <div className="w-full">
+                <div className="w-full overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
+                  <iframe
+                    title="Church location map"
+                    src="https://www.google.com/maps?q=2/39-41%20Fourth%20Avenue%20Blacktown%20NSW%202148&output=embed"
+                    className="w-full h-[240px] sm:h-[280px] md:h-[320px]"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </div>
               <div className="space-y-1">
                 <h3 className="font-bold text-lg">Address</h3>
                 <p className="text-sm text-gray-700">2/39-41 Fourth Avenue Blacktown NSW, 2148</p>
