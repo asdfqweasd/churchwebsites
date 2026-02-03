@@ -19,11 +19,11 @@ export function EventsSection({ events }: { events: Event[] }) {
         <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-8">
           <div className="space-y-4">
             <div>
-              <p className="text-xs mb-1 text-gray-600">Title</p>
+              <p className="text-xs mb-1 text-gray-600">Event Title</p>
               <input
                 value={searchTerm}
                 onChange={(event) => setSearchTerm(event.target.value)}
-                placeholder="Search by title"
+                placeholder="Search by Event title"
                 className="bg-white w-full h-10 rounded-full px-4 border border-gray-200 text-sm"
               />
             </div>

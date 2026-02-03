@@ -220,9 +220,6 @@ export default async function EventDetailPage({
               {/* White square and Tags container - middle layer (z-10) */}
               {tagList.length > 0 || city ? (
                 <div className="hidden md:block absolute top-7 right-12 z-10 w-[360px]">
-                  {/* White square - below tags */}
-                  <div className="absolute top-[120px] left-0 w-[360px] h-[220px] bg-white rounded-[18px] shadow-[0_10px_24px_rgba(15,23,42,0.12)] z-10"></div>
-
                   {/* Tags - above white square */}
                   <div
                     className="absolute left-0 w-[360px] flex items-center justify-center flex-wrap gap-3 z-20"
