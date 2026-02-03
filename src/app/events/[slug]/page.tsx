@@ -293,8 +293,9 @@ export default async function EventDetailPage({
             </div>
           </div>
         </div>
-
       </div>
+      {/* Spacer to keep footer away from the floating image on small screens */}
+      <div className="h-24 sm:h-32 lg:h-40" aria-hidden="true"></div>
     </main>
   );
 }
