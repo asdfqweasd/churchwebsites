@@ -35,6 +35,15 @@ type HomeData = {
   [key: string]: unknown;
 };
 
+const FALLBACK_HOME_DATA: HomeData = {
+  heroDescription:
+    "Welcome to The Church of Pentecost Sydney West. Join us for worship, prayer, fellowship, and community life as our content server finishes waking up.",
+  ministriesDescription:
+    "We serve people of all ages through prayer, discipleship, fellowship, outreach, and practical support in our local church community.",
+  givingDescription:
+    "Thank you for supporting the work of the church. Giving details will appear here when our content server is available.",
+};
+
 const heroTextStyle = {
   fontFamily: '"Sans Serif Collection", sans-serif',
   fontStyle: "normal",
@@ -208,7 +217,12 @@ export default async function HomePage() {
   try {
     const homeRes = await fetchFromStrapi("/api/home-page?populate=*");
     homeData = (homeRes as { data?: HomeData | null })?.data ?? null;
+  } catch (err: unknown) {
+    errorMessage = err instanceof Error ? err.message : String(err);
+    console.error("Error fetching home page data:", errorMessage);
+  }
 
+  try {
     const eventsRes = await fetchFromStrapi(
       "/api/events?populate=*&pagination[pageSize]=100&sort=startDatetime:desc"
     );
@@ -228,46 +242,48 @@ export default async function HomePage() {
       image: (item.image as Event["image"]) ?? null,
     }));
   } catch (err: unknown) {
-    errorMessage = err instanceof Error ? err.message : String(err);
-    console.error("Error fetching home data:", errorMessage);
+    const eventsErrorMessage = err instanceof Error ? err.message : String(err);
+    errorMessage = errorMessage ?? eventsErrorMessage;
+    console.error("Error fetching events data:", eventsErrorMessage);
   }
 
-  if (!homeData) {
-    return (
-      <main className="min-h-screen bg-white">
-        <div className="max-w-7xl mx-auto px-4 py-10">
-          <h1 className="text-2xl font-bold text-red-600">Error loading home page</h1>
-          {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
-        </div>
-      </main>
-    );
-  }
+  const resolvedHomeData = homeData ?? FALLBACK_HOME_DATA;
+  const isFallbackMode = !homeData;
 
-  const heroImageUrl = getStrapiImageUrl(homeData.heroImg);
+  const heroImageUrl = getStrapiImageUrl(resolvedHomeData.heroImg) || "/logo.png";
   const heroAlt =
-    (homeData.heroImg as { alternativeText?: string } | undefined)?.alternativeText ||
-    "Church";
-  const heroDescription = homeData.heroDescription || "";
-  const heroDescriptionRichtext = Array.isArray(homeData.heroDescriptionRichtext)
-    ? (homeData.heroDescriptionRichtext as RichTextNode[])
+    (resolvedHomeData.heroImg as { alternativeText?: string } | undefined)?.alternativeText ||
+    "The Church of Pentecost";
+  const heroDescription = resolvedHomeData.heroDescription || "";
+  const heroDescriptionRichtext = Array.isArray(resolvedHomeData.heroDescriptionRichtext)
+    ? (resolvedHomeData.heroDescriptionRichtext as RichTextNode[])
     : null;
 
-  const ministriesImageUrl = getStrapiImageUrl(homeData.ministriesImg);
+  const ministriesImageUrl = getStrapiImageUrl(resolvedHomeData.ministriesImg) || "/logo.png";
   const ministriesAlt =
-    (homeData.ministriesImg as { alternativeText?: string } | undefined)?.alternativeText ||
+    (resolvedHomeData.ministriesImg as { alternativeText?: string } | undefined)?.alternativeText ||
     "Ministries";
-  const ministriesDescription = homeData.ministriesDescription || "";
+  const ministriesDescription = resolvedHomeData.ministriesDescription || "";
 
-  const givingImageUrl = getStrapiImageUrl(homeData.givingImg);
+  const givingImageUrl = getStrapiImageUrl(resolvedHomeData.givingImg) || "/logo.png";
   const givingAlt =
-    (homeData.givingImg as { alternativeText?: string } | undefined)?.alternativeText ||
+    (resolvedHomeData.givingImg as { alternativeText?: string } | undefined)?.alternativeText ||
     "Giving";
-  const givingDescription = homeData.givingDescription || "";
+  const givingDescription = resolvedHomeData.givingDescription || "";
 
   const SHOW_GIVING = false;
 
   return (
     <main className="min-h-screen bg-white">
+      {isFallbackMode && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+          <div className="rounded-2xl border border-[#00B7E3]/20 bg-[#EAF9FD] px-4 py-3 text-sm text-slate-700">
+            Our content server is waking up, so some homepage content is temporarily shown in simplified mode.
+            {errorMessage ? ` ${errorMessage}` : ""}
+          </div>
+        </section>
+      )}
+
       {/* Hero */}
       <section className="relative w-full max-w-[1330px] h-[420px] sm:h-[520px] lg:h-[700px] xl:h-[820px] 2xl:h-[990px] rounded-[30px] overflow-hidden mx-auto px-4 sm:px-6 my-8">
         {heroImageUrl && (
