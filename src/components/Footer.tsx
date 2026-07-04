@@ -50,7 +50,7 @@ export default function Footer() {
                     </span>
                     <div className="text-sm leading-6">
                       <p className="font-semibold">Evening Service</p>
-                      <p className="text-gray-700">9:00 - 11:00 PM</p>
+                      <p className="text-gray-700">7:00 - 8:30 PM</p>
                     </div>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full">
@@ -60,7 +60,7 @@ export default function Footer() {
                     <div className="text-sm leading-6 space-y-1">
                       <p>
                         <span className="font-semibold">English:</span> 9:00 -
-                        10:45 AM
+                        11:00 AM
                       </p>
                       <p>
                         <span className="font-semibold">Akan:</span> 11:00 -
